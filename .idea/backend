@@ -1,0 +1,3 @@
+event -- calendar -> this is a many to one relationship
+calendar -- user -> this is a one to one relationship
+user -- user -> this is a one to one relationship
