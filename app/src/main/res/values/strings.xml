@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Hack Challenge</string>
+    <string name="welcome">Welcome to Decide For Me!</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="ask_a_yes_or_no_question">Ask a Yes or No Question</string>
+    <string name="ask">Ask!</string>
+    <string name="type_your_question_here">Type your question here</string>
 </resources>
