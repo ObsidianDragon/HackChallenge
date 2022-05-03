@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             //TODO Networking calls
-            val intent = Intent(this, AskQuestion::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("username", username.text)
             startActivity(intent)
         }

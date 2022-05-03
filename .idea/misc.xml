@@ -3,11 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_ask_question.xml" value="0.49114583333333334" />
-        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_login.xml" value="0.49114583333333334" />
-        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_question_history.xml" value="0.5052083333333334" />
-        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/question_cell.xml" value="0.5052083333333334" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_ask_question.xml" value="0.264" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_auth.xml" value="0.25" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_login.xml" value="0.4" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/activity_question_history.xml" value="0.264" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/fragment_answer.xml" value="0.25" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/fragment_ask.xml" value="0.2" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/fragment_history.xml" value="0.25" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/layout/question_cell.xml" value="0.2" />
+        <entry key="..\:/Users/zacha/AndroidStudioProjects/HackChallenge/app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
   </component>
