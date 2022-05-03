@@ -22,12 +22,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".QuestionHistory"
-            android:exported="false" />
-        <activity
-            android:name=".AskQuestion"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
