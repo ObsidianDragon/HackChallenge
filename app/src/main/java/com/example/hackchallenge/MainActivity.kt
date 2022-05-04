@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity(), AskFragment.Callback {
 //    private lateinit var viewPager: ViewPager2
     private lateinit var bottomNavBar: BottomNavigationView
     private lateinit var fragmentView: FragmentContainerView
+    private val fragmentManager = supportFragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), AskFragment.Callback {
 //        viewPager.adapter = ViewPagerAdapter(this)
 
         bottomNavBar = findViewById(R.id.navigationBar)
-        val fragmentManager = supportFragmentManager
+
 
         fragmentManager.beginTransaction().add(R.id.fragmentView, AnswerFragment()).commit()
 
@@ -61,7 +62,7 @@ class MainActivity : AppCompatActivity(), AskFragment.Callback {
 //
 //    }
 
-    override fun onClick(src: Int) {
-        TODO("Not yet implemented")
+    override fun onClick() {
+        fragmentManager.beginTransaction().replace(R.id.fragmentView, HistoryFragment()).commit()
     }
 }

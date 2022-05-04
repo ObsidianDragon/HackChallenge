@@ -14,7 +14,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
-        android:textSize="30sp"
+        android:fontFamily="@font/oswald"
+        android:textSize="35sp"
         android:text="@string/ask_a_yes_or_no_question"/>
     <EditText
         android:id="@+id/question"
@@ -26,6 +27,7 @@
         android:layout_marginTop="40dp"
         android:hint="@string/type_your_question_here"
         android:autofillHints="question"
+        android:fontFamily="@font/oswald"
         android:inputType="textNoSuggestions" />
     <Button
         android:id="@+id/button"
@@ -35,6 +37,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="40dp"
-        android:text="@string/ask"/>
+        android:fontFamily="@font/oswald"
+        android:text="@string/ask"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/grey"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

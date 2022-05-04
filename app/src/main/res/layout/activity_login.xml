@@ -15,6 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
         android:textSize="30sp"
+        android:fontFamily="@font/oswald"
         android:text="@string/log_in"/>
     <EditText
         android:id="@+id/password"
@@ -26,6 +27,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:hint="@string/password"
         android:autofillHints="password"
+        android:fontFamily="@font/oswald"
         android:inputType="textPassword"/>
     <EditText
         android:id="@+id/username"
@@ -37,6 +39,7 @@
         android:layout_marginBottom="20dp"
         android:hint="@string/username"
         android:autofillHints="username"
+        android:fontFamily="@font/oswald"
         android:inputType="textNoSuggestions" />
     <Button
         android:id="@+id/button"
@@ -46,6 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/oswald"
         android:text="@string/log_in"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
