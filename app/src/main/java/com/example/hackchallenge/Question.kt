@@ -4,6 +4,8 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class Question(
-    val body: String,
-    val answer: String
+    val description: String,
+    val response: Int,
+    val id: String,
+    val answered: String?
 )

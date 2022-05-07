@@ -4,19 +4,19 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
 <item
     android:id="@+id/answer_item"
     android:enabled="true"
-    android:icon="@mipmap/answer_question_empty_foreground"
-    android:title="@string/answer"
+    android:title=""
+    android:icon="@mipmap/home_foreground"
     app:showAsAction="ifRoom" />
 <item
     android:id="@+id/ask_item"
     android:enabled="true"
+    android:title=""
     android:icon="@mipmap/ask_question_empty_foreground"
-    android:title="@string/ask_string"
     app:showAsAction="ifRoom" />
 <item
     android:id="@+id/history_item"
     android:enabled="true"
+    android:title=""
     android:icon="@mipmap/question_history_empty_foreground"
-    android:title="@string/history"
     app:showAsAction="ifRoom" />
 </menu>

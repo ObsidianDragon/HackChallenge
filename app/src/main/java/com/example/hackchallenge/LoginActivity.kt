@@ -1,40 +1,54 @@
 package com.example.hackchallenge
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import java.io.IOException
 
-const val BASE_URL = "https://10.48.67.226/api"
+const val BASE_URL = "http://34.130.39.222/"
 
 class LoginActivity : AppCompatActivity() {
 
 
     private val client = OkHttpClient()
+    lateinit var sharedPref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        //access token from shared preferences
+        sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+
         setContentView(R.layout.activity_login)
 
         val username: EditText = findViewById(R.id.username)
         val password: EditText = findViewById(R.id.password)
         val button: Button = findViewById(R.id.button)
-        val message: TextView = findViewById(R.id.message)
+        val message: TextView = findViewById(R.id.accountMessage)
+        val link: TextView = findViewById(R.id.signUpText)
 
-        val signup = intent.getBooleanExtra("signup", false)
+
+
+        //change login to setup
+        var signup = intent.getBooleanExtra("signup", false)
         if (signup) {
-            button.text = getString(R.string.sign_up)
-            message.text = getString(R.string.sign_up)
+            button.text = getString(R.string.create)
+            message.text = getString(R.string.already_have_an_account)
+            link.text = getString(R.string.log_in)
         }
 
         button.setOnClickListener {
@@ -44,112 +58,92 @@ class LoginActivity : AppCompatActivity() {
                     if (signup) {
                         postUserAuth(username.text.toString(), password.text.toString())
                     } else {
-                        getUserAuth(username.text.toString(), password.text.toString())
+                        loginAuth(username.text.toString(), password.text.toString())
                     }
                 }
             }
-//            val intent = Intent(this, MainActivity::class.java)
-//            intent.putExtra("username", username.text)
-//            startActivity(intent)
+        }
+
+        //change login to signup and vice versa
+        link.setOnClickListener {
+            signup = !signup
+            if (signup) {
+                button.text = getString(R.string.create)
+                message.text = getString(R.string.already_have_an_account)
+                link.text = getString(R.string.log_in)
+            } else {
+                button.text = getString(R.string.log_in)
+                message.text = getString(R.string.don_t_have_an_account)
+                link.text = getString(R.string.sign_up)
+            }
         }
 
 
     }
 
-//    private fun getUser(username: String, password: String) {
-//        Log.d("In getUser", username+password)
-//        val requestGet = Request.Builder()
-//            .url(BASE_URL+"user/")
-//            .header("id", username)
-//            .header("password", password)
-//            .build()
-//        client.newCall(requestGet).enqueue(object: Callback {
-//            override fun onFailure(call: Call, e: IOException) {
-//                e.printStackTrace()
-//            }
-//
-//            override fun onResponse(call: Call, response: Response) {
-//                response.use{
-//                    if(!it.isSuccessful){
-//                        Log.d("Get user failed", response.toString())
-//                        //TODO handle failure?
-//                    } else {
-//                        nextPage(username)
-//                    }
-//                }
-//            }
-//
-//        })
-//    }
-//
-//    private fun postUser(username: String, password: String) {
-//
-//        val postBody = "{\"username\": \""+username+"\"}"
-//
-//        val request = Request.Builder()
-//            .url(BASE_URL + "user/").header("password", password)
-//            .post(postBody.toRequestBody(("application/json; charset=utf-8").toMediaType()))
-//            .build()
-//
-//        client.newCall(request).execute().use { response ->
-//            if (!response.isSuccessful) Log.d("ERROR", "Unexpected code $response")
-//            Log.d("response", response.body!!.string())
-//        }
-//    }
-
+    //method for signing up a new account
     private fun postUserAuth(username: String, password: String) {
 
-        val postBody = ""
+        val postBody = "{\"username\": \"$username\", \"password\": \"$password\"}"
 
         val request = Request.Builder()
-            .url(BASE_URL + "users/")
+            .url(BASE_URL + "register/")
             .addHeader("Authorization", Credentials.basic(username, password))
-//            .post(RequestBody.create(MediaType.parse("text/x-markdown", postBody))
             .post(postBody.toRequestBody(("text/x-markdown").toMediaType()))
             .build()
 
         client.newCall(request).execute().use { response ->
-            Log.d("response", response.body!!.string())
+            val jsonData = response.body!!.string()
+            Log.d("response", jsonData)
             if (!response.isSuccessful) {
                 Log.d("ERROR", "Unexpected code $response")
-                //TODO handle failure?
+
+                val text = "This username already exists. Please pick another"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, text, duration)
+                toast.show()
             } else {
-                nextPage(username)
+                val json = JSONObject(jsonData)
+                sharedPref.edit().putString("token", json.getString("session token")).commit()
+                Log.d("token response", json.getString("session token"))
+                sharedPref.edit().putString("update_token", json.getString("update_token")).commit()
+                nextPage()
+            }
+        }
+    }
+
+    private fun loginAuth(username: String, password: String) {
+
+        val postBody = "{\"username\": \"$username\", \"password\": \"$password\"}"
+
+        val request = Request.Builder()
+            .url(BASE_URL + "login/")
+            .addHeader("Authorization", Credentials.basic(username, password))
+            .post(postBody.toRequestBody(("text/x-markdown").toMediaType()))
+            .build()
+
+        client.newCall(request).execute().use { response ->
+            val jsonData = response.body!!.string()
+            Log.d("response", jsonData)
+            if (!response.isSuccessful) {
+                Log.d("ERROR", "Unexpected code $response")
+
+                val text = "Invalid username or password"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, text, duration)
+                toast.show()
+            } else {
+                val json = JSONObject(jsonData)
+                sharedPref.edit().putString("token", json.getString("session token")).commit()
+                sharedPref.edit().putString("update_token", json.getString("update_token")).commit()
+                nextPage()
             }
 
         }
     }
 
-    private fun getUserAuth(username: String, password: String) {
-        Log.d("In getUserAuth", username+password)
-        val requestGet = Request.Builder()
-            .url(BASE_URL+"user/"+username.hashCode())
-            .addHeader("Authorization", Credentials.basic(username, password))
-            .build()
-        client.newCall(requestGet).enqueue(object: Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-                Log.d("failure", e.toString())
-                nextPage(username)
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                response.use{
-                    if(!it.isSuccessful){
-                        Log.d("Get user failed", response.toString())
-                        //TODO handle failure?
-                    } else {
-                        nextPage(username)
-                    }
-                }
-            }
-
-        })
-    }
-
-    private fun nextPage(username: String) {
+    private fun nextPage() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("username", username)
         startActivity(intent)
     }
 }

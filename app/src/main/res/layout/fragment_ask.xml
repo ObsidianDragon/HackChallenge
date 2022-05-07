@@ -6,40 +6,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AskFragment">
 
-    <TextView
-        android:id="@+id/askAQuestion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"
-        android:fontFamily="@font/oswald"
-        android:textSize="35sp"
-        android:text="@string/ask_a_yes_or_no_question"/>
+
     <EditText
         android:id="@+id/question"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/askAQuestion"
-        android:layout_marginTop="40dp"
-        android:hint="@string/type_your_question_here"
+        app:layout_constraintTop_toBottomOf="@id/button"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_rect"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:hint="@string/ask_a_yes_or_no_question"
         android:autofillHints="question"
         android:fontFamily="@font/oswald"
-        android:inputType="textNoSuggestions" />
+        android:textSize="25sp"
+        android:inputType="textCapSentences" />
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:fontFamily="@font/oswald"
-        android:text="@string/ask"
+        android:text="@string/ask_string"
         android:textColor="@color/black"
-        android:backgroundTint="@color/grey"/>
+        android:backgroundTint="@color/medium_blue"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

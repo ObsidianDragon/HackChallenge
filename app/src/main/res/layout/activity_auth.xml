@@ -39,6 +39,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/signup"
             android:fontFamily="@font/oswald"
+            android:backgroundTint="@color/medium_blue"
             android:textSize="20sp"/>
         <Button
             android:id="@+id/signup"
@@ -49,6 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login"
             android:fontFamily="@font/oswald"
+            android:backgroundTint="@color/medium_blue"
             android:textSize="20sp"/>
 
 

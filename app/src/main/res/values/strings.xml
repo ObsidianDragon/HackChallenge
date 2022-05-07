@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Hack Challenge</string>
-    <string name="welcome">Welcome to Decide For Me!</string>
+    <string name="app_name">CU Decide</string>
+    <string name="welcome">Welcome to CU Decide!</string>
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
-    <string name="password">password</string>
-    <string name="username">username</string>
-    <string name="ask_a_yes_or_no_question">Ask a Yes or No Question</string>
-    <string name="ask">Ask!</string>
+    <string name="create">Create</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="ask_a_yes_or_no_question">Ask a yes or no question</string>
     <string name="type_your_question_here">Type your question here</string>
     <string name="answer">Answer</string>
     <string name="ask_string">Ask</string>
@@ -14,7 +14,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="no">X</string>
     <string name="skip">Skip</string>
     <string name="question">Question</string>
+    <string name="preference_file_key">session_token</string>
+    <string name="cu_decide">CU Decide</string>
+    <string name="don_t_have_an_account">Don\'t have an account?\ </string>
+    <string name="already_have_an_account">Already have an account?\ </string>
+    <string name="loading">Loading…</string>
+    <string name="congrats">Congrats! You\'ve answered every question we currently have!</string>
 </resources>

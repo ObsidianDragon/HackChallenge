@@ -1,5 +1,6 @@
 package com.example.hackchallenge
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.moshi.JsonAdapter
@@ -19,41 +21,24 @@ import kotlinx.coroutines.withContext
 import okhttp3.*
 import java.io.IOException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HistoryFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HistoryFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: QuestionAdapter
 
     private val client = OkHttpClient()
     private val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
-    private val questionJsonAdapter = moshi.adapter(Question::class.java)
-    private val questionListType = Types.newParameterizedType(List::class.java, Question::class.java)
-    private val questionListJsonAdapter : JsonAdapter<List<Question>> = moshi.adapter(questionListType)
+    private val questionListJsonAdapter = moshi.adapter(QuestionList::class.java)
     private val questions : MutableList<Question> = mutableListOf<Question>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
         runBlocking {
             withContext(Dispatchers.IO) {
                 populateQuestionList()
             }
         }
+
     }
 
     override fun onCreateView(
@@ -62,6 +47,10 @@ class HistoryFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_history, container, false)
         recyclerView = rootView.findViewById(R.id.recyclerView)
+        adapter = QuestionAdapter(questions)
+        recyclerView.layoutManager = LinearLayoutManager(requireActivity())
+        recyclerView.adapter = adapter
+
 
         // Inflate the layout for this fragment
         return rootView
@@ -69,8 +58,10 @@ class HistoryFragment : Fragment() {
 
     private fun populateQuestionList() {
         val requestGet = Request.Builder()
-            .url(BASE_URL+"question/")
+            .url(BASE_URL+"api/questions/asked/")
+            .addHeader("Authorization", "Bearer " + this.requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).getString("token", ""))
             .build()
+        Log.d("sending token: ", this.requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).getString("token", "")!!)
         client.newCall(requestGet).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
@@ -82,34 +73,15 @@ class HistoryFragment : Fragment() {
                         Log.d("Populate unsuccessful", response.toString())
                     }
                     val questionList = questionListJsonAdapter.fromJson(response.body!!.string())!!
-                    for(note in questionList) {
-                        questions.add(note)
+                    adapter = QuestionAdapter(questionList.asked)
+                    runBlocking {
+                        withContext(Dispatchers.Main) {
+                            recyclerView.adapter = adapter
+                        }
                     }
-                    adapter = QuestionAdapter(questions)
-                    recyclerView.adapter = adapter
                 }
             }
 
         })
     }
-
-//    companion object {
-//        /**
-//         * Use this factory method to create a new instance of
-//         * this fragment using the provided parameters.
-//         *
-//         * @param param1 Parameter 1.
-//         * @param param2 Parameter 2.
-//         * @return A new instance of fragment HistoryFragment.
-//         */
-//        // TODO: Rename and change types and number of parameters
-//        @JvmStatic
-//        fun newInstance(param1: String, param2: String) =
-//            HistoryFragment().apply {
-//                arguments = Bundle().apply {
-//                    putString(ARG_PARAM1, param1)
-//                    putString(ARG_PARAM2, param2)
-//                }
-//            }
-//    }
 }

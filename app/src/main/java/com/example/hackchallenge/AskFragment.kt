@@ -1,5 +1,6 @@
 package com.example.hackchallenge
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -18,16 +20,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AskFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AskFragment : Fragment() {
     private val client = OkHttpClient()
 
@@ -35,16 +28,8 @@ class AskFragment : Fragment() {
         fun onClick()
     }
 
-    // TODO: Rename and change types of parameters
-//    private var param1: String? = null
-//    private var param2: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-//        }
     }
 
     override fun onCreateView(
@@ -58,14 +43,12 @@ class AskFragment : Fragment() {
         val editText: EditText = rootView.findViewById(R.id.question)
 
         button.setOnClickListener{
-            //TODO Networking
             runBlocking {
                 withContext(Dispatchers.IO) {
-//                    postQuestion(editText.text.toString())
+                    postQuestion(editText.text.toString())
                 }
             }
 
-            //TODO go to question history
             callback.onClick()
         }
         // Inflate the layout for this fragment
@@ -74,11 +57,11 @@ class AskFragment : Fragment() {
 
     private fun postQuestion(question: String) {
 
-        val postBody = "{\"body\": $question}"
+        val postBody = "{\"description\": \"$question\", \"response\": \"0\"}"
 
         val request = Request.Builder()
-            .url(BASE_URL + "question/")
-//            .post(RequestBody.create(MediaType.parse("text/x-markdown", postBody))
+            .url(BASE_URL + "api/questions/")
+            .addHeader("Authorization", this.requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).getString("token", "")!!)
             .post(postBody.toRequestBody(("text/x-markdown").toMediaType()))
             .build()
 
@@ -86,10 +69,11 @@ class AskFragment : Fragment() {
             Log.d("response", response.body!!.string())
             if (!response.isSuccessful) {
                 Log.d("ERROR", "Unexpected code $response")
-                //TODO handle failure?
+//                val text = "Could not ask your question. Please try again later."
+//                val duration = Toast.LENGTH_SHORT
+//                val toast = Toast.makeText(this.requireContext(), text, duration)
+//                toast.show()
             }
-            //TODO what happens after asking?
-
         }
     }
 }
