@@ -43,13 +43,15 @@ class AskFragment : Fragment() {
         val editText: EditText = rootView.findViewById(R.id.question)
 
         button.setOnClickListener{
-            runBlocking {
-                withContext(Dispatchers.IO) {
-                    postQuestion(editText.text.toString())
+            if (!editText.text.isBlank()) {
+                runBlocking {
+                    withContext(Dispatchers.IO) {
+                        postQuestion(editText.text.toString())
+                    }
                 }
-            }
 
-            callback.onClick()
+                callback.onClick()
+            }
         }
         // Inflate the layout for this fragment
         return rootView

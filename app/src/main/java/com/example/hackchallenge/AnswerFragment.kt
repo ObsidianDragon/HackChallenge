@@ -82,6 +82,9 @@ class AnswerFragment : Fragment() {
     //Method to answer a question using authentication
     private fun postResponse(answer: Int) {
 
+        if (questionId.equals("-1")) {
+            return
+        }
         val postBody = "{\"response\": \""+answer.toString()+"\"}"
         Log.d("postBody", postBody)
 
@@ -160,6 +163,7 @@ class AnswerFragment : Fragment() {
                         //display no questions left message
                         Log.d("Get next question failed", response.toString())
                         question.text = getString(R.string.congrats)
+                        questionId = "-1"
                     } else {
 
                         val jsonData = response.body!!.string()
