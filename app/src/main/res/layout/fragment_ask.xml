@@ -22,7 +22,8 @@
         android:autofillHints="question"
         android:fontFamily="@font/oswald"
         android:textSize="25sp"
-        android:inputType="textCapSentences" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:singleLine="false"/>
     <Button
         android:id="@+id/button"
         android:layout_width="50dp"
