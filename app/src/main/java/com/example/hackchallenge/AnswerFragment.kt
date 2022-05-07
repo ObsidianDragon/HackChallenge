@@ -105,6 +105,8 @@ class AnswerFragment : Fragment() {
                 if (json.getString("error").equals("Invalid session token")) {
                     //update token
                     postUpdate(answer)
+                } else if (json.getString("error").equals("Question has already been responded to!")) {
+                    getQuestion()
                 }
             } else {
                 //if successful, get a new question to answer
@@ -149,7 +151,7 @@ class AnswerFragment : Fragment() {
     private fun getQuestion() {
         val requestGet = Request.Builder()
             .url(BASE_URL+"api/questions/next/")
-            .addHeader("Token", this.requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).getString("token", "").toString())
+            .addHeader("Authorization", this.requireActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE).getString("token", "").toString())
             .build()
         client.newCall(requestGet).enqueue(object: Callback {
             override fun onFailure(call: Call, e: IOException) {
